@@ -1,7 +1,37 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _floatingAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    )..repeat(reverse: true); // Floating back and forth
+
+    _floatingAnimation = Tween<double>(
+      begin: 0,
+      end: 20,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +54,11 @@ class HomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 10), // Small gap before divider
-              // Horizontal Line Divider
+
               Divider(thickness: 1, color: Colors.grey[300]),
 
-              const SizedBox(height: 40), // More breathing after divider
+              const SizedBox(height: 40),
+
               // Saved Life & Donors
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -38,35 +69,44 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 70), // More breathing before the Logo
-              // Centered Get Blood Logo as Button
+              const SizedBox(height: 70),
+
+              // Centered Animated Get Blood Logo
               Expanded(
                 child: Center(
                   child: GestureDetector(
                     onTap: () {
-                      // TODO: Action for Get Blood
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Get Blood button tapped! 🚑"),
                         ),
                       );
                     },
-                    child: Container(
-                      width: 220,
-                      height: 220,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.redAccent.withOpacity(0.2),
-                            blurRadius: 30,
-                            spreadRadius: 10,
-                          ),
-                        ],
-                      ),
-                      child: Image.asset(
-                        'assets/img/getBlood.png', // Your sick logo path
-                        fit: BoxFit.contain,
+                    child: AnimatedBuilder(
+                      animation: _floatingAnimation,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(0, -_floatingAnimation.value),
+                          child: child,
+                        );
+                      },
+                      child: Container(
+                        width: 220,
+                        height: 220,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.redAccent.withOpacity(0.2),
+                              blurRadius: 30,
+                              spreadRadius: 10,
+                            ),
+                          ],
+                        ),
+                        child: Image.asset(
+                          'assets/img/getBlood.png',
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                   ),
