@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './homeScreen.dart'; // <<=== Import the HomeScreen
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -305,14 +306,25 @@ class _LoginScreenState extends State<LoginScreen>
         ],
       ),
       child: ElevatedButton(
-        onPressed: handleLogin,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+          );
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.redAccent,
-          padding: const EdgeInsets.symmetric(vertical: 18),
+          minimumSize: const Size(
+            double.infinity,
+            60,
+          ), // Full width + 60 height
+          padding: const EdgeInsets.symmetric(
+            vertical: 18,
+          ), // Only vertical padding
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          elevation: 0,
+          elevation: 0, // No default shadow (custom shadow handled outside)
         ),
         child: const Text(
           "Login",
