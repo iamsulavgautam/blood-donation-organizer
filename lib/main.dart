@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './screens/loginScreen.dart';
 
 void main() {
   runApp(const RaktaApp());
@@ -37,8 +38,6 @@ class _FirstScreenState extends State<FirstScreen>
   @override
   void initState() {
     super.initState();
-
-    // Floating animation controller
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -56,16 +55,14 @@ class _FirstScreenState extends State<FirstScreen>
     super.dispose();
   }
 
-  void navigateToSecondScreen() {
+  void navigateToLoginScreen() {
     Navigator.of(
       context,
-    ).push(MaterialPageRoute(builder: (_) => const SecondScreen()));
+    ).push(MaterialPageRoute(builder: (_) => const LoginScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -75,8 +72,6 @@ class _FirstScreenState extends State<FirstScreen>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
-
-              // App Name
               Center(
                 child: Text(
                   "Rakta",
@@ -95,10 +90,7 @@ class _FirstScreenState extends State<FirstScreen>
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
-
-              // LOGO - Floating and Hero Animated
               Expanded(
                 child: Center(
                   child: AnimatedBuilder(
@@ -134,10 +126,7 @@ class _FirstScreenState extends State<FirstScreen>
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
-
-              // Small Motivational Text
               Center(
                 child: Text(
                   "Donate blood, save lives.",
@@ -150,15 +139,12 @@ class _FirstScreenState extends State<FirstScreen>
                   textAlign: TextAlign.center,
                 ),
               ),
-
               const SizedBox(height: 40),
-
-              // Save Life Button
               Center(
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 30),
                   child: ElevatedButton(
-                    onPressed: navigateToSecondScreen,
+                    onPressed: navigateToLoginScreen,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.redAccent,
                       elevation: 6,
@@ -185,28 +171,6 @@ class _FirstScreenState extends State<FirstScreen>
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-// Second Screen Example (for Hero animation)
-class SecondScreen extends StatelessWidget {
-  const SecondScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Welcome to Rakta'),
-        backgroundColor: Colors.redAccent,
-      ),
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Hero(
-          tag: 'raktaLogo',
-          child: Image.asset('assets/img/rakta.png', width: 200, height: 200),
         ),
       ),
     );
