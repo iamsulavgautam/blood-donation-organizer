@@ -64,7 +64,7 @@ lib/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/iamsulavgautam/rakta.git
+git clone https://github.com/iamsulavgautam/blood-donation-organizer.git
 cd rakta
 ```
 
